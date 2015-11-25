@@ -1,0 +1,34 @@
+{
+  "id": "hdfs-mesos",
+  "instances": 1,
+  "cpus": 0.5,
+  "mem": 512.0,
+  "ports": [
+    31000
+  ],
+  "requirePorts": true,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "mymesos/hdfs-mesos:latest",
+      "network": "HOST"
+    },
+    "volumes": [
+      {
+        "containerPath": "/etc/localtime",
+        "hostPath": "/etc/localtime",
+        "mode": "RO"
+      }
+    ]
+  },
+  "env": {
+    "MESOS_HDFS_STATE_ZK": "localhost:2181",
+    "MESOS_MASTER_URI": "zk://localhost:2181/mesos",
+    "MESOS_HDFS_ZKFC_HA_ZOOKEEPER_QUORUM": "localhost:2181"
+  },
+  "healthChecks": [
+    {
+      "protocol": "TCP"
+    }
+  ]
+}
